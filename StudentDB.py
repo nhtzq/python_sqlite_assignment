@@ -92,7 +92,7 @@ def main():
 
 	group.add_argument("-r", "--remove", type=name_type, help="Delete the student from the database")
 
-	group.add_argument("-u", "--update", type=name_type, nargs=2, help="Update the student in the database, use \"python3 StudentDB.py -u <student_name> <new_student_name>\"")
+	group.add_argument("-u", "--update", type=name_type, nargs=2, help="Update the student in the database to a new name, use \"python3 StudentDB.py -u <student_name> <new_student_name>\"")
 
 	args = parser.parse_args()
 	if args.init:
