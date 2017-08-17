@@ -17,7 +17,7 @@ A python tool used to manage the Student table at the SQLite3 database, student.
   
   If the database student.db exists, it would open it otherwise create a new one. If the table Student doesn't exist, if would create a new one otherwise drop it and then create a new one.
 
-* __python3 StudentDB.py -a, --add <student name>__
+* __python3 StudentDB.py -a, --add <student_name>__
   
   Add student to database table. 
 
@@ -25,10 +25,10 @@ A python tool used to manage the Student table at the SQLite3 database, student.
   
   List all students in the database.
 
-* __python3 StudentDB.py -r, --remove <student name>__
+* __python3 StudentDB.py -r, --remove <student_name>__
   
   Delete the student from the database. 
 
-* __python3 StudentDB.py -u, --update <student name> <new_student name>__
+* __python3 StudentDB.py -u, --update <student_name> <new_student_name>__
   
   Update the student in the database to a new name. 
