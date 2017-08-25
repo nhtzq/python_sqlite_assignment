@@ -6,6 +6,72 @@ import sqlite3
 
 db_name = "student.db"
 
+class DBManager:
+	def __init__(self, db_name):
+		# Connection to SQLite3
+		self.conn = sqlite3.connect(db_name)
+		# Cursor
+		self.cursor = self.conn.cursor()
+
+	# Initialization. Create a new Student table whether it exists or not.
+	def init(self):
+		self.cursor.execute("DROP TABLE IF EXISTS Student")
+		self.cursor.execute("CREATE TABLE Student (Name varchar(30))")
+		self.conn.close()
+		print("Initialized empty table Student in database {}.".format(db_name))
+
+	# Add a student to database table
+	def add(self, student_name):
+		self.cursor.execute("INSERT INTO Student VALUES (?)", [student_name])
+		self.conn.commit()
+		self.conn.close()
+		print("Student named \"" + student_name + "\" added into table Student.")
+
+	# List all students in the database
+	def list(self):
+		self.cursor.execute("SELECT * FROM Student")
+
+		# Print table header BEGIN
+		descriptions = self.cursor.description
+		for description in descriptions:
+			print("{:30s}".format(description[0]), end = '')
+		print()
+		for description in descriptions:
+			print('-' * 30, end = '')
+		print()
+		# Print table header END
+
+		for row in self.cursor.fetchall():
+			for column in row:
+				print("{:30s}".format(column), end = '')
+			print()
+		self.conn.close()
+
+	# Delete the student from the database
+	def remove(self, student_name):
+		self.cursor.execute("SELECT * FROM Student WHERE name=?", [student_name])
+		number_of_records = len(self.cursor.fetchall())
+		if number_of_records == 0:
+			print("No matched records for student named " + student_name + ".")
+		else:
+			self.cursor.execute("DELETE FROM Student WHERE name=?", [student_name])
+			self.conn.commit()
+			print(number_of_records, "record(s) of student(s) named \"" + student_name + "\" removed from table Student.")
+		self.conn.close()
+
+	# Update the student in the database
+	def update(self, student_name_old, student_name_new):
+		self.cursor.execute("SELECT * FROM Student WHERE name=?", [student_name_old])
+		number_of_records = len(self.cursor.fetchall())
+		if number_of_records == 0:
+			print("No matched records for student named \"" + student_name_old + "\".")
+		else:
+			self.cursor.execute("UPDATE Student SET name=? WHERE name=?", [student_name_new, student_name_old])
+			self.conn.commit()
+			print("Changed student(s) named \"" + student_name_old + "\" to " + student_name_new + ".", number_of_records, "record(s) changed.")
+		self.conn.close()
+
+'''
 def build():
 	# Connection to SQLite3
 	conn = sqlite3.connect(db_name)
@@ -65,7 +131,7 @@ def update(student_name_old, student_name_new):
 		conn.commit()
 		print("Changed student(s) named \"" + student_name_old + "\" to " + student_name_new + ".", number_of_records, "record(s) changed.")
 	conn.close()
-	
+'''
 
 
 # ------------ argparse ------------
@@ -95,16 +161,27 @@ def main():
 	group.add_argument("-u", "--update", type=name_type, nargs=2, help="Update the student in the database to a new name, use \"python3 StudentDB.py -u <student_name> <new_student_name>\"")
 
 	args = parser.parse_args()
+
 	if args.init:
-		init()
+		dbManager = DBManager(db_name)
+		dbManager.init()
+
 	elif args.add:
-		add(args.add)
+		dbManager = DBManager(db_name)
+		dbManager.add(args.add)
+
 	elif args.list:
-		list()
+		dbManager = DBManager(db_name)
+		dbManager.list()
+
 	elif args.remove:
-		remove(args.remove)
+		dbManager = DBManager(db_name)
+		dbManager.remove(args.remove)
+
 	elif args.update:
-		update(args.update[0], args.update[1])
+		dbManager = DBManager(db_name)
+		dbManager.update(args.update[0], args.update[1])
+
 	else:
 		print("Please select an option, use \"python3 StudentDB.py -h(-help)\" to see usage.")
 
