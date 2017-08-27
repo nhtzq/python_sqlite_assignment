@@ -71,69 +71,6 @@ class DBManager:
 			print("Changed student(s) named \"" + student_name_old + "\" to " + student_name_new + ".", number_of_records, "record(s) changed.")
 		self.conn.close()
 
-'''
-def build():
-	# Connection to SQLite3
-	conn = sqlite3.connect(db_name)
-	# Cursor
-	return conn, conn.cursor()
-
-# Initialization. Create a new Student table whether it exists or not.
-def init():
-	conn, c = build()
-	c.execute("DROP TABLE IF EXISTS Student")
-	c.execute("CREATE TABLE Student (Name varchar(30))")
-	conn.close()
-	print("Initialized empty table Student in database student.db.")
-
-# Add a student to database table
-def add(student_name):
-	conn, c = build()
-	c.execute("INSERT INTO Student VALUES (?)", [student_name])
-	conn.commit()
-	conn.close()
-	print("Student named \"" + student_name + "\" added into table Student.")
-
-# List all students in the database
-def list():
-	conn, c = build()
-	c.execute("SELECT * FROM Student")
-	column_names = [description[0] for description in c.description]
-	print("{:30s}".format(column_names[0]))
-	print("_" * 30)
-	for row in c.fetchall():
-		print("{:30s}".format(row[0]))
-	conn.close()
-
-# Delete the student from the database
-def remove(student_name):
-	conn, c = build()
-	c.execute("SELECT * FROM Student WHERE name=?", [student_name])
-	number_of_records = len(c.fetchall())
-	if number_of_records == 0:
-		print("No matched records for student named " + student_name + ".")
-	else:
-		c.execute("DELETE FROM Student WHERE name=?", [student_name])
-		conn.commit()
-		print(number_of_records, "record(s) of student(s) named \"" + student_name + "\" removed from table Student.")
-	conn.close()
-	
-
-# Update the student in the database
-def update(student_name_old, student_name_new):
-	conn, c = build()
-	c.execute("SELECT * FROM Student WHERE name=?", [student_name_old])
-	number_of_records = len(c.fetchall())
-	if number_of_records == 0:
-		print("No matched records for student named \"" + student_name_old + "\".")
-	else:
-		c.execute("UPDATE Student SET name=? WHERE name=?", [student_name_new, student_name_old])
-		conn.commit()
-		print("Changed student(s) named \"" + student_name_old + "\" to " + student_name_new + ".", number_of_records, "record(s) changed.")
-	conn.close()
-'''
-
-
 # ------------ argparse ------------
 def main():
 
