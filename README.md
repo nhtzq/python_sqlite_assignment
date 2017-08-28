@@ -24,7 +24,7 @@ __Initial commit:__
   
   If the database student.db exists, it would open it otherwise create a new one. If the table Student doesn't exist, if would create a new one otherwise drop it and then create a new one.
 
-* __python3 StudentDB.py -a, --add <id> <first_name> <last_name> <gender> <class>__
+* __python3 StudentDB.py -a, --add \<id> \<first_name> \<last_name> \<gender> \<class>__
   
   Add student to database table. 
 
@@ -32,10 +32,14 @@ __Initial commit:__
   
   List all students in the database.
 
-* __python3 StudentDB.py -r, --remove <id>__
+* __python3 StudentDB.py -r, --remove \<id>__
   
   Delete the student from the database. 
 
-* __python3 StudentDB.py -u, --update <id> <first_name> <last_name> <gender> <class>__
+* __python3 StudentDB.py -u, --update \<id> \<first_name> \<last_name> \<gender> \<class>__
   
   Update the student in the database to a new name. 
+  
+* __python3 StudentDB.py -s, --schema__
+  
+  Show the schema of the Student table. 
